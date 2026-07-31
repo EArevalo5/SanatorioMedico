@@ -1,0 +1,6 @@
+@SanatorioMedico.API_HostAddress = http://localhost:5256
+
+GET {{SanatorioMedico.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
