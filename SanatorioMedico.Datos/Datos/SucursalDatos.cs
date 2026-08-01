@@ -126,6 +126,20 @@ namespace SanatorioMedico.Datos.Datos
 				}
 			}
 		}
+		// Método Eliminar Sucursal
+		public bool EliminarSucursal(int codigoSucursal)
+		{
+			using SqlConnection conexion = new SqlConnection(ConexionSQL.CadenaConexion);
+			using SqlCommand comando = new SqlCommand("Usp_Sucursales_Eliminar", conexion);
+
+			comando.CommandType = CommandType.StoredProcedure;
+			comando.Parameters.Add("@CodigoSucursal", SqlDbType.Int).Value = codigoSucursal;
+
+			conexion.Open();
+			comando.ExecuteNonQuery();
+
+			return true;
+		}
 
 
 

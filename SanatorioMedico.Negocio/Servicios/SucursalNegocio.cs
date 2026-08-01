@@ -37,6 +37,11 @@ namespace SanatorioMedico.Negocio.Servicios
 		{
 			return sucursalDatos.EditarSucursal(sucursal);
 		}
+		// Método Eliminar Sucursal
+		public bool EliminarSucursal(int codigoSucursal)
+		{
+			return sucursalDatos.EliminarSucursal(codigoSucursal);
+		}
 
 
 

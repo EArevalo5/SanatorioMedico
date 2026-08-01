@@ -200,6 +200,34 @@ namespace SanatorioMedico.API.Controllers
 			}
 		}
 
+		// Método Eliminar Sucursal
+		[HttpDelete("EliminarSucursal/{codigoSucursal:int}")]
+		public ActionResult<RespuestaApi<bool>> EliminarSucursal(int codigoSucursal)
+		{
+			try
+			{
+				bool resultado = sucursalNegocio.EliminarSucursal(codigoSucursal);
+
+				return Ok(new RespuestaApi<bool>
+				{
+					Exito = resultado,
+					Mensaje = resultado ? "Sucursal eliminada correctamente." : "No fue posible eliminar la sucursal.",
+					Datos = resultado,
+					Detalle = null
+				});
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new RespuestaApi<bool>
+				{
+					Exito = false,
+					Mensaje = "Ocurrió un error al eliminar la sucursal.",
+					Datos = false,
+					Detalle = ex.Message
+				});
+			}
+		}
+
 
 
 
