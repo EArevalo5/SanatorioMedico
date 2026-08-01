@@ -19,5 +19,14 @@ namespace SanatorioMedico.Negocio.Servicios
 		{
 			return sucursalDatos.ConsultarSucursales();
 		}
+
+
+
+		// Metodo Agregar Sucursales
+		public bool AgregarSucursal(Sucursal sucursal)
+		{
+			return sucursalDatos.AgregarSucursal(sucursal);
+		}
+
 	}
 }

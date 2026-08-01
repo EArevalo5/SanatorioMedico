@@ -41,5 +41,42 @@ namespace SanatorioMedico.Datos.Datos
 
 			return listaSucursales;
 		}
+		// Método Agregar Sucursal
+		public bool AgregarSucursal(Sucursal sucursal)
+		{
+			using SqlConnection conexion = new SqlConnection(ConexionSQL.CadenaConexion);
+
+			using SqlCommand comando = new SqlCommand("Usp_Sucursales_Agregar", conexion);
+
+			comando.CommandType = CommandType.StoredProcedure;
+
+			comando.Parameters.AddWithValue("@NombreSucursal", sucursal.NombreSucursal);
+			comando.Parameters.AddWithValue("@Direccion", sucursal.Direccion);
+			comando.Parameters.AddWithValue("@FechaApertura", sucursal.FechaApertura);
+			comando.Parameters.AddWithValue("@HoraApertura", sucursal.HoraApertura);
+			comando.Parameters.AddWithValue("@PresupuestoMensual", sucursal.PresupuestoMensual);
+			comando.Parameters.AddWithValue("@Estado", sucursal.Estado);
+
+			conexion.Open();
+
+			comando.ExecuteNonQuery();
+
+
+			return true;
+		}
+
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

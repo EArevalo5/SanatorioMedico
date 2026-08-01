@@ -59,6 +59,51 @@ namespace SanatorioMedico.API.Controllers
 		}
 
 
+
+
+		// Método Agregar Sucursales
+		[HttpPost("AgregarSucursal")]
+		public ActionResult<RespuestaApi<bool>>
+			AgregarSucursal([FromBody] SucursalAgregarDTO sucursalAgregarDTO)
+		{
+			try
+			{
+				Sucursal sucursal = new Sucursal
+				{
+					NombreSucursal = sucursalAgregarDTO.NombreSucursal,
+					Direccion = sucursalAgregarDTO.Direccion,
+					FechaApertura = sucursalAgregarDTO.FechaApertura,
+					HoraApertura = sucursalAgregarDTO.HoraApertura,
+					PresupuestoMensual = sucursalAgregarDTO.PresupuestoMensual,
+					Estado = sucursalAgregarDTO.Estado
+				};
+
+				bool resultado = sucursalNegocio.AgregarSucursal(sucursal);
+
+				return Ok(new RespuestaApi<bool>
+				{
+					Exito = resultado,
+					Mensaje = resultado
+						? "Sucursal agregada correctamente."
+						: "No fue posible agregar la sucursal.",
+					Datos = resultado,
+					Detalle = null
+				});
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500,
+					new RespuestaApi<bool>
+					{
+						Exito = false,
+						Mensaje = "Ocurrió un error al agregar la sucursal.",
+						Datos = false,
+						Detalle = ex.Message
+					});
+			}
+		}
+
+
 	}
 }
 
