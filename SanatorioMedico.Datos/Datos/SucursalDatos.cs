@@ -97,6 +97,37 @@ namespace SanatorioMedico.Datos.Datos
 			return null;
 		}
 
+		// Método Editar Sucursal
+		public bool EditarSucursal(Sucursal sucursal)
+		{
+			using (SqlConnection conexion = new SqlConnection(ConexionSQL.CadenaConexion))
+			{
+				using (SqlCommand comando = new SqlCommand("Usp_Sucursales_Editar", conexion))
+				{
+					comando.CommandType = CommandType.StoredProcedure;
+
+					// Parámetros
+					comando.Parameters.Add("@CodigoSucursal", SqlDbType.Int).Value = sucursal.CodigoSucursal;
+					comando.Parameters.Add("@NombreSucursal", SqlDbType.VarChar, 100).Value = sucursal.NombreSucursal;
+					comando.Parameters.Add("@Direccion", SqlDbType.NVarChar, 200).Value = sucursal.Direccion;
+
+					SqlParameter parametroPresupuesto = comando.Parameters.Add("@PresupuestoMensual", SqlDbType.Decimal);
+					parametroPresupuesto.Precision = 12;
+					parametroPresupuesto.Scale = 2;
+					parametroPresupuesto.Value = sucursal.PresupuestoMensual;
+
+					comando.Parameters.Add("@Estado", SqlDbType.Bit).Value = sucursal.Estado;
+
+					// Ejecución
+					conexion.Open();
+					comando.ExecuteNonQuery();
+
+					return true;
+				}
+			}
+		}
+
+
 
 
 

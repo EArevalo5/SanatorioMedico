@@ -162,6 +162,49 @@ namespace SanatorioMedico.API.Controllers
 
 
 
+
+		// Método Editar Sucursal
+		[HttpPut("EditarSucursal")]
+		public ActionResult<RespuestaApi<bool>> EditarSucursal([FromBody] SucursalEditarDTO sucursalEditarDTO)
+		{
+			try
+			{
+				Sucursal sucursal = new Sucursal
+				{
+					CodigoSucursal = sucursalEditarDTO.CodigoSucursal,
+					NombreSucursal = sucursalEditarDTO.NombreSucursal,
+					Direccion = sucursalEditarDTO.Direccion,
+					PresupuestoMensual = sucursalEditarDTO.PresupuestoMensual,
+					Estado = sucursalEditarDTO.Estado
+				};
+
+				bool resultado = sucursalNegocio.EditarSucursal(sucursal);
+
+				return Ok(new RespuestaApi<bool>
+				{
+					Exito = resultado,
+					Mensaje = resultado ? "Sucursal editada correctamente." : "No fue posible editar la sucursal.",
+					Datos = resultado,
+					Detalle = null
+				});
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new RespuestaApi<bool>
+				{
+					Exito = false,
+					Mensaje = "Ocurrió un error al editar la sucursal.",
+					Datos = false,
+					Detalle = ex.Message
+				});
+			}
+		}
+
+
+
+
+
+
 	}
 }
 

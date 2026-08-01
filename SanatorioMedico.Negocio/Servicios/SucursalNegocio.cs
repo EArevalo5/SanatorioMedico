@@ -32,6 +32,13 @@ namespace SanatorioMedico.Negocio.Servicios
 		{
 			return sucursalDatos.BuscarSucursal(codigoSucursal);
 		}
+		// Método Editar Sucursal
+		public bool EditarSucursal(Sucursal sucursal)
+		{
+			return sucursalDatos.EditarSucursal(sucursal);
+		}
+
+
 
 	}
 }
