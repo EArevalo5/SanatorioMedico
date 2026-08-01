@@ -102,6 +102,64 @@ namespace SanatorioMedico.API.Controllers
 					});
 			}
 		}
+		// Método Buscar Sucursal
+		[HttpGet("BuscarSucursal/{codigoSucursal:int}")]
+		public ActionResult<RespuestaApi<SucursalConsultaDTO>>
+			BuscarSucursal(int codigoSucursal)
+		{
+			try
+			{
+				Sucursal? sucursal = sucursalNegocio.BuscarSucursal(codigoSucursal);
+
+				if (sucursal == null)
+				{
+					return NotFound(
+						new RespuestaApi<SucursalConsultaDTO>
+						{
+							Exito = false,
+							Mensaje =
+								"No se encontró la sucursal solicitada.",
+							Datos = null,
+							Detalle = null
+						});
+				}
+
+				SucursalConsultaDTO sucursalConsultaDTO = new SucursalConsultaDTO
+				{
+					CodigoSucursal = sucursal.CodigoSucursal,
+					NombreSucursal = sucursal.NombreSucursal,
+					Direccion = sucursal.Direccion,
+					FechaApertura = sucursal.FechaApertura,
+					HoraApertura = sucursal.HoraApertura,
+					PresupuestoMensual = sucursal.PresupuestoMensual,
+					Estado = sucursal.Estado
+				};
+
+				return Ok(
+					new RespuestaApi<SucursalConsultaDTO>
+					{
+						Exito = true,
+						Mensaje =
+							"Sucursal encontrada correctamente.",
+						Datos = sucursalConsultaDTO,
+						Detalle = null
+					});
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(
+					500,
+					new RespuestaApi<SucursalConsultaDTO>
+					{
+						Exito = false,
+						Mensaje =
+							"Ocurrió un error al buscar la sucursal.",
+						Datos = null,
+						Detalle = ex.Message
+					});
+			}
+		}
+
 
 
 	}

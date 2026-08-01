@@ -65,6 +65,41 @@ namespace SanatorioMedico.Datos.Datos
 			return true;
 		}
 
+		// Método Buscar Sucursal
+		public Sucursal? BuscarSucursal(int codigoSucursal)
+		{
+			using SqlConnection conexion = new SqlConnection(ConexionSQL.CadenaConexion);
+
+			using SqlCommand comando = new SqlCommand("Usp_Sucursales_Buscar", conexion);
+
+			comando.CommandType = CommandType.StoredProcedure;
+
+			comando.Parameters.Add("@CodigoSucursal", SqlDbType.Int).Value = codigoSucursal;
+
+			conexion.Open();
+
+			using SqlDataReader lector = comando.ExecuteReader();
+
+			if (lector.Read())
+			{
+				Sucursal sucursal = new Sucursal
+				{
+					CodigoSucursal = Convert.ToInt32(lector["CodigoSucursal"]),
+					NombreSucursal = Convert.ToString(lector["NombreSucursal"]) ?? string.Empty,
+					Direccion = Convert.ToString(lector["Direccion"]) ?? string.Empty,
+					FechaApertura = DateOnly.FromDateTime(Convert.ToDateTime(lector["FechaApertura"])),
+					HoraApertura = TimeOnly.FromTimeSpan((TimeSpan)lector["HoraApertura"]),
+					PresupuestoMensual = Convert.ToDecimal(lector["PresupuestoMensual"]),
+					Estado = Convert.ToBoolean(lector["Estado"])
+				};
+				return sucursal;
+			}
+			return null;
+		}
+
+
+
+
 	}
 }
 
